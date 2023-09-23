@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import { type Metadata } from "next";
 import { getProductById } from "@/api/products";
-import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
-import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
+import { ProductImage } from "@/ui/atoms/ProductImage";
 
 // export const generateStaticParams = async () => {
 // 	const products = await getProductsList();
@@ -34,14 +32,9 @@ export default async function SingleProductPage({ params }: { params: { productI
 	return (
 		<>
 			<article className="flex justify-center gap-8">
-				<ProductCoverImage {...product.coverImage} />
+				<ProductImage {...product.coverImage} />
 				<ProductDescription product={product} />
 			</article>
-			<aside className="mt-9">
-				<Suspense>
-					<SuggestedProductsList />
-				</Suspense>
-			</aside>
 		</>
 	);
 }

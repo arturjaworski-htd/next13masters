@@ -30,10 +30,14 @@ export const ActiveLink = <T extends string>({
 		<Link
 			href={href}
 			aria-current={isActive ? "page" : undefined}
-			className={clsx(`text-blue-400 hover:text-blue-600`, className, isActive && activeClassName, {
-				underline: isActive,
-				"pointer-events-none text-gray-400": disabled,
-			})}
+			className={clsx(
+				className ||
+					"flex h-full w-full min-w-[3rem] items-center justify-center border-b-2 border-transparent px-1 pt-1 text-center text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700",
+				isActive && (activeClassName || "border-blue-500"),
+				{
+					"pointer-events-none text-slate-300": disabled,
+				},
+			)}
 			aria-disabled={disabled}
 		>
 			{children}

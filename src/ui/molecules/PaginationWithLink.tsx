@@ -9,7 +9,8 @@ type PaginationWithLinkProps = {
 export const PaginationWithLink = ({ page, siblings = 1 }: PaginationWithLinkProps) => {
 	const isFirstPage = page === 1;
 
-	const className = "rounded-2xl border border-gray-900 px-4 py-2 text-gray-900";
+	const className =
+		"rounded-2xl border px-4 py-2 text-slate-500 hover:border-blue-500 hover:text-blue-500";
 
 	const siblingsArray = [...Array(siblings).keys()];
 	const previousPages = siblingsArray
