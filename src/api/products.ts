@@ -16,7 +16,7 @@ type ProductResponseItem = {
 
 export const getProductsList = async (page = 1, take = 20) => {
 	const offset = (page - 1) * take;
-	const params = `?take=${page}}&offset=${offset}`;
+	const params = `?take=${take}&offset=${offset}`;
 
 	const res = await fetch(`https://naszsklep-api.vercel.app/api/products${params}`);
 
