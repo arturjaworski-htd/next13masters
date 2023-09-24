@@ -1,0 +1,10 @@
+fragment CollectionListItem on Collection {
+	id
+	slug
+	name
+	description
+	image {
+		url
+		fileName
+	}
+}

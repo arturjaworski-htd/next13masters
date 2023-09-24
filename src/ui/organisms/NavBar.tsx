@@ -1,7 +1,7 @@
 import { type Route } from "next";
 import { ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import { ActiveLink } from "../atoms/ActiveLink";
+import { NavSearchBar } from "../atoms/NavSearchBar";
 
 type NavLinkType = {
 	href: Route<string>;
@@ -11,6 +11,8 @@ type NavLinkType = {
 const navLinks: NavLinkType[] = [
 	{ href: "/", label: "Home" },
 	{ href: "/products", label: "All", exact: false },
+	{ href: "/categories", label: "Categories", exact: false },
+	{ href: "/collections", label: "Collections", exact: false },
 ];
 
 export const NavBar = () => {
@@ -29,12 +31,15 @@ export const NavBar = () => {
 							))}
 						</ul>
 					</nav>
-					<div>
-						<Link href="/cart" className="flex text-slate-500 hover:text-slate-700">
-							<ShoppingCart />
-							<span className="ml-2">0</span>
-							<span className="sr-only">Cart</span>
-						</Link>
+					<div className="flex h-full flex-1 items-center px-2 lg:ml-6 lg:h-16 lg:justify-end">
+						<NavSearchBar />
+						<div className="ml-auto h-full lg:ml-4">
+							<ActiveLink href="/cart">
+								<ShoppingCart />
+								<span className="sr-only">Cart</span>
+								<span className="ml-2">0</span>
+							</ActiveLink>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -7,7 +7,7 @@ type ProductImageProps = {
 
 export const ProductImage = ({ src, alt }: ProductImageProps) => {
 	return (
-		<div className="overflow-hidden rounded-md border bg-slate-50 hover:bg-slate-100">
+		<div className="overflow-hidden rounded-md border bg-slate-50 hover:bg-slate-100 md:min-w-max">
 			<NextImage
 				width={320}
 				height={600}

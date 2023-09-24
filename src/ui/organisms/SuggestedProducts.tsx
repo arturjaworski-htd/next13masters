@@ -1,12 +1,21 @@
 import { ProductList } from "./ProductList";
-import { getProductsList } from "@/api/products";
+import { getSuggestedProductsByCategoryName } from "@/api/products";
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+type SuggestedProductsListProps = {
+	categoryName: string;
+};
 
-export const SuggestedProductsList = async () => {
-	const products = await getProductsList();
+export const SuggestedProductsList = async ({ categoryName }: SuggestedProductsListProps) => {
+	const products = await getSuggestedProductsByCategoryName(categoryName);
 
-	await sleep(1000);
+	if (products.length === 0) {
+		return;
+	}
 
-	return <ProductList products={products.slice(-4)} />;
+	return (
+		<aside className="mt-9 flex flex-col gap-6">
+			<h2 className="text-xl font-bold">Related products</h2>
+			<ProductList data-testid="related-products" products={products} />
+		</aside>
+	);
 };

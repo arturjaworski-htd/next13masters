@@ -1,16 +1,17 @@
 import { getProductsList } from "@/api/products";
+import { MAX_PRODUCTS_PER_PAGE } from "@/constants";
 import { PaginationWithLink } from "@/ui/molecules/PaginationWithLink";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 export const generateStaticParams = async () => {
-	return [...Array(20).keys()].map((page) => ({
+	return [...Array(2).keys()].map((page) => ({
 		params: { pageNumber: page + 1 },
 	}));
 };
 
-export default async function ProductsPage({ params }: { params: { page: string } }) {
-	const page = parseInt(params.page, 10) || 1;
-	const products = await getProductsList(page);
+export default async function ProductsPage({ params }: { params: { pageNumber: string } }) {
+	const page = parseInt(params.pageNumber, 10) || 1;
+	const { products, totalCount } = await getProductsList(page, MAX_PRODUCTS_PER_PAGE);
 
 	if (products.length === 0) {
 		return <div className="text-center">Not founds any products</div>;
@@ -19,7 +20,12 @@ export default async function ProductsPage({ params }: { params: { page: string 
 	return (
 		<div className="flex flex-col gap-9">
 			<ProductList products={products} />
-			<PaginationWithLink page={page} />
+			<PaginationWithLink
+				href="/products"
+				page={page}
+				perPage={MAX_PRODUCTS_PER_PAGE}
+				totalCount={totalCount}
+			/>
 		</div>
 	);
 }

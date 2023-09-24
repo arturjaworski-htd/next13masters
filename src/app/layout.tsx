@@ -31,13 +31,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" className={`${firaCode.variable} ${firaSans.variable} ${montserrat.variable}`}>
-			{" "}
 			<body>
 				<NavBar />
 				<section className="mx-auto max-w-md p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
 					{children}
 				</section>
-				<footer>
+				<footer className="p-4">
 					<p className="text-center text-sm text-gray-500">© {new Date().getFullYear()}</p>
 				</footer>
 			</body>
