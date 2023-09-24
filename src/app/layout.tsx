@@ -1,10 +1,27 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fira_Code, Fira_Sans, Montserrat } from "next/font/google";
 
 import { NavBar } from "@/ui/organisms/NavBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const firaCode = Fira_Code({
+	subsets: ["latin"],
+	weight: ["300", "400", "700"],
+	variable: "--font-firaCode",
+	display: "swap",
+});
+const firaSans = Fira_Sans({
+	subsets: ["latin", "latin-ext"],
+	weight: ["300", "400", "700"],
+	variable: "--font-firaSans",
+	display: "swap",
+});
+const montserrat = Montserrat({
+	subsets: ["latin", "latin-ext"],
+	weight: "variable",
+	variable: "--font-montserrat",
+	display: "swap",
+});
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -13,8 +30,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
-			<body className={inter.className}>
+		<html lang="en" className={`${firaCode.variable} ${firaSans.variable} ${montserrat.variable}`}>
+			{" "}
+			<body>
 				<NavBar />
 				<section className="mx-auto max-w-md p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
 					{children}

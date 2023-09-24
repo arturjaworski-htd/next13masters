@@ -1,4 +1,4 @@
-import Image from "next/image";
+import NextImage from "next/image";
 
 type ProductCoverImageProps = {
 	src: string;
@@ -8,7 +8,7 @@ type ProductCoverImageProps = {
 export const ProductCoverImage = ({ src, alt }: ProductCoverImageProps) => {
 	return (
 		<div className="aspect-square overflow-hidden rounded-md border bg-slate-50 hover:bg-slate-100">
-			<Image
+			<NextImage
 				width={320}
 				height={320}
 				alt={alt}

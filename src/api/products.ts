@@ -1,52 +1,30 @@
-import { type ProductItemType } from "@/ui/types";
-
-type ProductResponseItem = {
-	id: string;
-	title: string;
-	price: number;
-	description: string;
-	category: string;
-	rating: {
-		rate: number;
-		count: number;
-	};
-	image: string;
-	longDescription: string;
-};
+import { executeGraphql } from "./graphqlApi";
+import {
+	ProductGetByIdDocument,
+	type ProductListItemFragment,
+	ProductsGetByCategorySlugDocument,
+	ProductsGetListDocument,
+} from "@/gql/graphql";
 
 export const getProductsList = async (page = 1, take = 20) => {
-	const offset = (page - 1) * take;
-	const params = `?take=${take}&offset=${offset}`;
+	// const offset = (page - 1) * take;
+	// const params = `?take=${take}&offset=${offset}`;
 
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products${params}`);
+	const { products } = await executeGraphql(ProductsGetListDocument);
 
-	const productsResponse = (await res.json()) as ProductResponseItem[];
-
-	const products = productsResponse.map(productResponseItemToProductItemType);
 	return products;
 };
 
-export const getProductById = async (id: ProductResponseItem["id"]) => {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products/${id}`);
+export const getProductsByCategorySlug = async (categorySlug: string) => {
+	const { products } = await executeGraphql(ProductsGetByCategorySlugDocument, {
+		slug: categorySlug,
+	});
 
-	const productResponse = (await res.json()) as ProductResponseItem;
-	return productResponseItemToProductItemType(productResponse);
+	return products;
 };
 
-const productResponseItemToProductItemType = (product: ProductResponseItem): ProductItemType => {
-	return {
-		id: product.id,
-		name: product.title,
-		category: product.category,
-		price: product.price,
-		coverImage: {
-			alt: product.title,
-			src: product.image,
-		},
-		rating: {
-			rate: product.rating.rate,
-			count: product.rating.count,
-		},
-		description: product.description,
-	};
+export const getProductById = async (id: ProductListItemFragment["id"]) => {
+	const { product } = await executeGraphql(ProductGetByIdDocument, { id: id });
+
+	return product;
 };

@@ -4,7 +4,7 @@ import { ProductList } from "@/ui/organisms/ProductList";
 
 export const generateStaticParams = async () => {
 	return [...Array(20).keys()].map((page) => ({
-		params: { page: page + 1 },
+		params: { pageNumber: page + 1 },
 	}));
 };
 

@@ -32,10 +32,11 @@ export const ActiveLink = <T extends string>({
 			aria-current={isActive ? "page" : undefined}
 			className={clsx(
 				className ||
-					"flex h-full w-full min-w-[3rem] items-center justify-center border-b-2 border-transparent px-1 pt-1 text-center text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700",
-				isActive && (activeClassName || "border-blue-500"),
+					"flex h-full w-full min-w-[3rem] items-center justify-center border-b-2 px-1 pt-1 text-center text-sm font-medium text-slate-500 hover:border-slate-300 hover:text-slate-700",
 				{
 					"pointer-events-none text-slate-300": disabled,
+					"border-transparent": !isActive,
+					[activeClassName || "border-blue-500"]: isActive,
 				},
 			)}
 			aria-disabled={disabled}

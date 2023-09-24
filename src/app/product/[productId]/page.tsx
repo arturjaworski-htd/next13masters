@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
@@ -16,25 +17,29 @@ export const generateMetadata = async ({
 	params: { productId: string };
 }): Promise<Metadata> => {
 	const product = await getProductById(params.productId);
-	return {
-		title: `${product.name} | Next Store`,
-		description: product.description,
-		openGraph: {
-			title: `${product.name} | Next Store`,
-			description: product.description,
-			images: [product.coverImage.src],
-		},
-	};
+	return product
+		? {
+				title: `${product.name} | Next Store`,
+				description: product.description,
+				openGraph: {
+					title: `${product.name} | Next Store`,
+					description: product.description,
+					images: product.images[0] && [product.images[0].url],
+				},
+		  }
+		: {};
 };
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
+
+	if (!product) {
+		notFound();
+	}
 	return (
-		<>
-			<article className="flex justify-center gap-8">
-				<ProductImage {...product.coverImage} />
-				<ProductDescription product={product} />
-			</article>
-		</>
+		<article className="flex justify-center gap-8">
+			{product.images[0] && <ProductImage src={product.images[0].url} alt="" />}
+			<ProductDescription product={product} />
+		</article>
 	);
 }
