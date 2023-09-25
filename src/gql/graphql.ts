@@ -4504,7 +4504,7 @@ export type Order = Node & {
   createdBy?: Maybe<User>;
   /** Get the document in other stages */
   documentInStages: Array<Order>;
-  email?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
   /** List of Order versions */
   history: Array<Version>;
   /** The unique identifier */
@@ -4517,7 +4517,7 @@ export type Order = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
-  stripeCheckoutId?: Maybe<Scalars['String']['output']>;
+  stripeCheckoutId: Scalars['String']['output'];
   total: Scalars['Int']['output'];
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
@@ -4600,9 +4600,9 @@ export type OrderConnection = {
 
 export type OrderCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
   orderItems?: InputMaybe<OrderItemCreateManyInlineInput>;
-  stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
+  stripeCheckoutId: Scalars['String']['input'];
   total: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
