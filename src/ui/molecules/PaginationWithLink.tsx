@@ -1,19 +1,19 @@
 import { type Route } from "next";
 import { ActiveLink } from "../atoms/ActiveLink";
 
-type PaginationWithLinkProps = {
-	href: Route<string>;
+type PaginationWithLinkProps<T extends string> = {
+	href: Route<T>;
 	page: number;
 	perPage: number;
 	totalCount: number;
 };
 
-export const PaginationWithLink = ({
+export const PaginationWithLink = <T extends string>({
 	href,
 	page,
 	perPage,
 	totalCount,
-}: PaginationWithLinkProps) => {
+}: PaginationWithLinkProps<T>) => {
 	const pagesCount = Math.ceil(totalCount / perPage);
 
 	const isFirstPage = page === 1;
@@ -32,9 +32,9 @@ export const PaginationWithLink = ({
 			>
 				{"<"}
 			</ActiveLink>
-			{pages.map((pageNumber) => (
-				<ActiveLink href={`${href}/${pageNumber}` as Route} key={pageNumber} className={className}>
-					{pageNumber}
+			{pages.map((page) => (
+				<ActiveLink href={`${href}/${page}` as Route} key={page} className={className}>
+					{page}
 				</ActiveLink>
 			))}
 			<ActiveLink
