@@ -2,6 +2,7 @@ import { type Route } from "next";
 import { ShoppingCart } from "lucide-react";
 import { ActiveLink } from "../atoms/ActiveLink";
 import { NavSearchBar } from "../atoms/NavSearchBar";
+import { getCart } from "@/api/cart";
 
 type NavLinkType = {
 	href: Route<string>;
@@ -15,7 +16,10 @@ const navLinks: NavLinkType[] = [
 	{ href: "/collections", label: "Collections", exact: false },
 ];
 
-export const NavBar = () => {
+export const NavBar = async () => {
+	const cart = await getCart();
+	const count = cart?.orderItems.length || 0;
+
 	return (
 		<header className="sticky top-0 z-20 border-b bg-white bg-opacity-60 backdrop-blur-lg">
 			<div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -37,7 +41,7 @@ export const NavBar = () => {
 							<ActiveLink href="/cart">
 								<ShoppingCart />
 								<span className="sr-only">Cart</span>
-								<span className="ml-2">0</span>
+								<span className="ml-2">{count}</span>
 							</ActiveLink>
 						</div>
 					</div>

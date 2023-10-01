@@ -5,6 +5,7 @@ import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
 import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
+import { ReviewSection } from "@/ui/organisms/ReviewSection";
 
 // export const generateStaticParams = async () => {
 // 	const products = await getProductsList();
@@ -39,7 +40,7 @@ export default async function SingleProductPage({ params }: { params: { productI
 		notFound();
 	}
 	return (
-		<>
+		<div className="flex flex-col gap-8">
 			<article className="flex flex-col gap-8 md:flex-row">
 				{product.images[0] && (
 					<ProductImage src={product.images[0].url} alt={product.images[0].fileName} />
@@ -51,6 +52,9 @@ export default async function SingleProductPage({ params }: { params: { productI
 					<SuggestedProductsList categoryName={product.categories[0].name} />
 				</Suspense>
 			)}
-		</>
+			<Suspense>
+				<ReviewSection productId={product.id} />
+			</Suspense>
+		</div>
 	);
 }

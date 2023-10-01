@@ -1,14 +1,24 @@
-// import { CheckCheck, X } from "lucide-react";
+import { revalidateTag } from "next/cache";
+import { AddToCartButton } from "./AddToCartButton";
 import { type ProductListItemFragment } from "@/gql/graphql";
 import { formatMoney } from "@/utils";
+import { getOrCreateCart, addProductToCart } from "@/api/cart";
 
 type ProductDescriptionProps = {
 	product: ProductListItemFragment;
 };
 
 export const ProductDescription = ({
-	product: { name, price, description },
+	product: { id, name, price, description },
 }: ProductDescriptionProps) => {
+	async function addProductToCartAction() {
+		"use server";
+		const cart = await getOrCreateCart();
+		await addProductToCart(cart.id, id);
+
+		revalidateTag("cart");
+	}
+
 	return (
 		<div className="flex flex-col gap-6">
 			<h1 className="text-2xl font-bold text-slate-900">{name}</h1>
@@ -20,12 +30,9 @@ export const ProductDescription = ({
 
 			<p className="text-sm text-slate-500">{description}</p>
 
-			{/* <span className="flex gap-2 font-medium text-slate-600">
-				{rating.count ? <CheckCheck className="text-blue-600" /> : <X className="text-red-600" />}
-				{rating.count ? "In stock" : "Out of stock"}
-			</span> */}
-
-			{/* <span className="mt-auto self-end text-slate-500">Rating: {rating.rate}/5</span> */}
+			<form action={addProductToCartAction}>
+				<AddToCartButton />
+			</form>
 		</div>
 	);
 };

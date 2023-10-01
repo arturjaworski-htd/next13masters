@@ -36,7 +36,7 @@ export const ActiveLink = <T extends string>({
 				{
 					"pointer-events-none text-slate-300": disabled,
 					"border-transparent": !isActive,
-					[activeClassName || "border-blue-500"]: isActive,
+					[activeClassName || "border-blue-500 font-semibold"]: isActive,
 				},
 			)}
 			aria-disabled={disabled}

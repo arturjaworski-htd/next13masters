@@ -13,7 +13,7 @@ export const SuggestedProductsList = async ({ categoryName }: SuggestedProductsL
 	}
 
 	return (
-		<aside className="mt-9 flex flex-col gap-6">
+		<aside className="flex flex-col gap-6">
 			<h2 className="text-xl font-bold">Related products</h2>
 			<ProductList data-testid="related-products" products={products} />
 		</aside>

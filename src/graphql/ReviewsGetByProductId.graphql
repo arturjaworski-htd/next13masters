@@ -1,0 +1,5 @@
+query ReviewsGetByProductId($productId: ID!, $stage: Stage!) {
+	reviews(where: { product: { id: $productId } }, stage: $stage, orderBy: createdAt_DESC) {
+		...ReviewListItem
+	}
+}

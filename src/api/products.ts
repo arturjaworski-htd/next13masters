@@ -12,9 +12,15 @@ import {
 export const getProductsList = async (page = 1, limit = 20) => {
 	const offset = (page - 1) * limit;
 
-	const { products, productsConnection } = await executeGraphql(ProductsGetListDocument, {
-		limit,
-		offset,
+	const { products, productsConnection } = await executeGraphql({
+		query: ProductsGetListDocument,
+		variables: {
+			limit,
+			offset,
+		},
+		next: {
+			revalidate: 15,
+		},
 	});
 	const { count: totalCount } = productsConnection.aggregate;
 
@@ -22,8 +28,11 @@ export const getProductsList = async (page = 1, limit = 20) => {
 };
 
 export const getSuggestedProductsByCategoryName = async (categoryName: string) => {
-	const { products } = await executeGraphql(ProductsGetSuggestedByCategoryNameDocument, {
-		name: categoryName,
+	const { products } = await executeGraphql({
+		query: ProductsGetSuggestedByCategoryNameDocument,
+		variables: {
+			name: categoryName,
+		},
 	});
 
 	return products;
@@ -32,10 +41,13 @@ export const getSuggestedProductsByCategoryName = async (categoryName: string) =
 export const getProductsByCategorySlug = async (categorySlug: string, page = 1, limit = 20) => {
 	const offset = (page - 1) * limit;
 
-	const { products, productsConnection } = await executeGraphql(ProductsGetByCategorySlugDocument, {
-		slug: categorySlug,
-		limit,
-		offset,
+	const { products, productsConnection } = await executeGraphql({
+		query: ProductsGetByCategorySlugDocument,
+		variables: {
+			slug: categorySlug,
+			limit,
+			offset,
+		},
 	});
 
 	const { count: totalCount } = productsConnection.aggregate;
@@ -44,23 +56,32 @@ export const getProductsByCategorySlug = async (categorySlug: string, page = 1, 
 };
 
 export const getProductsByCollectionSlug = async (collectionSlug: string) => {
-	const { products } = await executeGraphql(ProductsGetByCollectionSlugDocument, {
-		slug: collectionSlug,
+	const { products } = await executeGraphql({
+		query: ProductsGetByCollectionSlugDocument,
+		variables: {
+			slug: collectionSlug,
+		},
 	});
 
 	return products;
 };
 
 export const getProductsBySearchPhrase = async (search: string) => {
-	const { products } = await executeGraphql(ProductsGetBySearchPhraseDocument, {
-		search,
+	const { products } = await executeGraphql({
+		query: ProductsGetBySearchPhraseDocument,
+		variables: {
+			search,
+		},
 	});
 
 	return products;
 };
 
 export const getProductById = async (id: ProductListItemFragment["id"]) => {
-	const { product } = await executeGraphql(ProductGetByIdDocument, { id: id });
+	const { product } = await executeGraphql({
+		query: ProductGetByIdDocument,
+		variables: { id: id },
+	});
 
 	return product;
 };

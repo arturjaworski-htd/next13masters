@@ -3,11 +3,11 @@ import { MAX_PRODUCTS_PER_PAGE } from "@/constants";
 import { PaginationWithLink } from "@/ui/molecules/PaginationWithLink";
 import { ProductList } from "@/ui/organisms/ProductList";
 
-export const generateStaticParams = async () => {
-	return [...Array(1).keys()].map((page) => ({
-		params: { pageNumber: page + 1 },
-	}));
-};
+// export const generateStaticParams = async () => {
+// 	return [...Array(1).keys()].map((page) => ({
+// 		params: { pageNumber: page + 1 },
+// 	}));
+// };
 
 export default async function CategoryPage({
 	params,
