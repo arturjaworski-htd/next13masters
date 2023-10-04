@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { type Metadata } from "next";
 import { getProductById } from "@/api/products";
 import { ProductDescription } from "@/ui/atoms/ProductDescription";
 import { ProductImage } from "@/ui/atoms/ProductImage";
@@ -13,24 +14,23 @@ import { ReviewSection } from "@/ui/organisms/ReviewSection";
 // 	}));
 // };
 
-// export const generateMetadata = async ({
-// 	params,
-// }: {
-// 	params: { productId: string };
-// }): Promise<Metadata> => {
-// 	const product = await getProductById(params.productId);
-// 	return product
-// 		? {
-// 				title: `${product.name} | Next Store`,
-// 				description: product.description,
-// 				openGraph: {
-// 					title: `${product.name} | Next Store`,
-// 					description: product.description,
-// 					images: product.images[0] && [product.images[0].url],
-// 				},
-// 		  }
-// 		: {};
-// };
+export const generateMetadata = async ({
+	params,
+}: {
+	params: { productId: string };
+}): Promise<Metadata> => {
+	const product = await getProductById(params.productId);
+	return product
+		? {
+				title: `${product.name} | Next Store`,
+				description: product.description,
+				openGraph: {
+					title: `${product.name} | Next Store`,
+					description: product.description,
+				},
+		  }
+		: {};
+};
 
 export default async function SingleProductPage({ params }: { params: { productId: string } }) {
 	const product = await getProductById(params.productId);
