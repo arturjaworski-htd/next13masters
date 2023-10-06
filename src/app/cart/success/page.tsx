@@ -16,5 +16,5 @@ export default async function CartSuccessPage({
 
 	const stripeCheckoutSession = await stripe.checkout.sessions.retrieve(searchParams.session_id);
 
-	return <div>{stripeCheckoutSession.payment_status}</div>;
+	return <h1>The status of your order: {stripeCheckoutSession.payment_status}</h1>;
 }

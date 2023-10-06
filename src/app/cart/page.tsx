@@ -53,7 +53,7 @@ export default async function CartPage() {
 			},
 			line_items: cartItems,
 			success_url: `http://localhost:3000/cart/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `http://localhost:3000/cart/canceled`,
+			cancel_url: `http://localhost:3000/cart`,
 		});
 
 		if (session.url) {

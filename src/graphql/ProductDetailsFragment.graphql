@@ -1,0 +1,21 @@
+fragment ProductDetails on Product {
+	id
+	name
+	description
+	price
+	categories(first: 1) {
+		name
+	}
+	images(first: 1) {
+		url
+		fileName
+	}
+	variants {
+		... on ProductSizeColorVariant {
+			...ProductSizeColorVariant
+		}
+		... on ProductColorVariant {
+			...ProductColorVariant
+		}
+	}
+}

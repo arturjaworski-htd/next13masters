@@ -1,15 +1,20 @@
 import { revalidateTag } from "next/cache";
 import { AddToCartButton } from "./AddToCartButton";
-import { type ProductListItemFragment } from "@/gql/graphql";
+import { ProductVarians } from "./ProductVariants";
+import {
+	type ProductSizeColorVariantFragment,
+	type ProductDetailsFragment,
+	type ProductColorVariantFragment,
+} from "@/gql/graphql";
 import { formatMoney } from "@/utils";
 import { getOrCreateCart, addProductToCart } from "@/api/cart";
 
 type ProductDescriptionProps = {
-	product: ProductListItemFragment;
+	product: ProductDetailsFragment;
 };
 
 export const ProductDescription = ({
-	product: { id, name, price, description },
+	product: { id, name, price, description, variants },
 }: ProductDescriptionProps) => {
 	async function addProductToCartAction() {
 		"use server";
@@ -19,8 +24,12 @@ export const ProductDescription = ({
 		revalidateTag("cart");
 	}
 
+	const filteredVariants = variants.filter((variant) => Object.keys(variant).length > 0) as
+		| ProductSizeColorVariantFragment[]
+		| ProductColorVariantFragment[];
+
 	return (
-		<div className="flex flex-col gap-6">
+		<div className="flex grow flex-col gap-6">
 			<h1 className="text-2xl font-bold text-slate-900">{name}</h1>
 
 			<p className="text-lg font-medium text-slate-900">
@@ -29,6 +38,8 @@ export const ProductDescription = ({
 			</p>
 
 			<p className="text-sm text-slate-500">{description}</p>
+
+			<ProductVarians variants={filteredVariants} productId={id} />
 
 			<form action={addProductToCartAction}>
 				<AddToCartButton />

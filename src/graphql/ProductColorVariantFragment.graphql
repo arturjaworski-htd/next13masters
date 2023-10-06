@@ -1,0 +1,3 @@
+fragment ProductColorVariant on ProductColorVariant {
+	color
+}
