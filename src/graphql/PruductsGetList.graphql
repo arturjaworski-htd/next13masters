@@ -1,5 +1,5 @@
-query ProductsGetList($limit: Int!, $offset: Int!) {
-	products(first: $limit, skip: $offset, orderBy: createdAt_DESC) {
+query ProductsGetList($limit: Int!, $offset: Int!, $orderBy: ProductOrderByInput = createdAt_DESC) {
+	products(first: $limit, skip: $offset, orderBy: $orderBy) {
 		...ProductListItem
 	}
 	productsConnection {

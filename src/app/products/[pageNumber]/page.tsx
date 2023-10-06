@@ -1,17 +1,51 @@
 import { getProductsList } from "@/api/products";
 import { MAX_PRODUCTS_PER_PAGE } from "@/constants";
+import { type ProductOrderByInput } from "@/gql/graphql";
 import { PaginationWithLink } from "@/ui/molecules/PaginationWithLink";
 import { ProductList } from "@/ui/organisms/ProductList";
+import { SortingSelector } from "@/ui/atoms/SortingSelector";
 
-// export const generateStaticParams = async () => {
-// 	return [...Array(2).keys()].map((page) => ({
-// 		params: { pageNumber: page + 1 },
-// 	}));
-// };
+type SortingOption = {
+	label: string;
+	value: ProductOrderByInput;
+	dataTestId?: string;
+};
 
-export default async function ProductsPage({ params }: { params: { pageNumber: string } }) {
+const sortingOptions: Array<SortingOption> = [
+	{
+		label: "Name (A-Z)",
+		value: "name_ASC",
+	},
+	{
+		label: "Name (Z-A)",
+		value: "name_DESC",
+	},
+	{
+		label: "Price (Low to High)",
+		value: "price_ASC",
+		dataTestId: "sort-by-price",
+	},
+	{
+		label: "Price (High to Low)",
+		value: "price_DESC",
+		dataTestId: "sort-by-price",
+	},
+];
+
+export default async function ProductsPage({
+	params,
+	searchParams,
+}: {
+	params: { pageNumber: string };
+	searchParams: { [key: string]: string };
+}) {
+	const sortBy =
+		sortingOptions.find((opt) => opt.value === searchParams["sortBy"])?.value ||
+		sortingOptions[0]?.value;
+
 	const page = parseInt(params.pageNumber, 10) || 1;
-	const { products, totalCount } = await getProductsList(page, MAX_PRODUCTS_PER_PAGE);
+
+	const { products, totalCount } = await getProductsList(page, MAX_PRODUCTS_PER_PAGE, sortBy);
 
 	if (products.length === 0) {
 		return <div className="text-center">Not founds any products</div>;
@@ -19,6 +53,9 @@ export default async function ProductsPage({ params }: { params: { pageNumber: s
 
 	return (
 		<div className="flex flex-col gap-9">
+			<div className="flex justify-end">
+				<SortingSelector options={sortingOptions} selected={sortBy} />
+			</div>
 			<ProductList products={products} />
 			<PaginationWithLink
 				href="/products"

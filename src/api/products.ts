@@ -7,9 +7,10 @@ import {
 	ProductsGetByCollectionSlugDocument,
 	ProductsGetSuggestedByCategoryNameDocument,
 	ProductsGetBySearchPhraseDocument,
+	type ProductOrderByInput,
 } from "@/gql/graphql";
 
-export const getProductsList = async (page = 1, limit = 20) => {
+export const getProductsList = async (page = 1, limit = 20, orderBy?: ProductOrderByInput) => {
 	const offset = (page - 1) * limit;
 
 	const { products, productsConnection } = await executeGraphql({
@@ -17,6 +18,7 @@ export const getProductsList = async (page = 1, limit = 20) => {
 		variables: {
 			limit,
 			offset,
+			orderBy,
 		},
 		next: {
 			revalidate: 15,

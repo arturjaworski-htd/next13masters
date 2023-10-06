@@ -10813,6 +10813,7 @@ export type ProductsGetSuggestedByCategoryNameQuery = { products: Array<{ id: st
 export type ProductsGetListQueryVariables = Exact<{
   limit: Scalars['Int']['input'];
   offset: Scalars['Int']['input'];
+  orderBy?: InputMaybe<ProductOrderByInput>;
 }>;
 
 
@@ -11165,8 +11166,8 @@ export const ProductsGetSuggestedByCategoryNameDocument = new TypedDocumentStrin
   price
 }`) as unknown as TypedDocumentString<ProductsGetSuggestedByCategoryNameQuery, ProductsGetSuggestedByCategoryNameQueryVariables>;
 export const ProductsGetListDocument = new TypedDocumentString(`
-    query ProductsGetList($limit: Int!, $offset: Int!) {
-  products(first: $limit, skip: $offset, orderBy: createdAt_DESC) {
+    query ProductsGetList($limit: Int!, $offset: Int!, $orderBy: ProductOrderByInput = createdAt_DESC) {
+  products(first: $limit, skip: $offset, orderBy: $orderBy) {
     ...ProductListItem
   }
   productsConnection {
