@@ -23,6 +23,7 @@ const documents = {
     "query CategoriesGetList {\n  categories {\n    id\n    slug\n    name\n  }\n}": types.CategoriesGetListDocument,
     "fragment CollectionListItem on Collection {\n  id\n  slug\n  name\n  description\n  image {\n    url\n    fileName\n  }\n}": types.CollectionListItemFragmentDoc,
     "query CollectionsGetList {\n  collections {\n    ...CollectionListItem\n  }\n}": types.CollectionsGetListDocument,
+    "query OrdersGetByEmail($email: String!) {\n  orders(where: {email: $email}) {\n    id\n    total\n    createdAt\n    orderItems {\n      id\n      quantity\n      total\n      product {\n        name\n        price\n        images {\n          url\n        }\n      }\n    }\n  }\n}": types.OrdersGetByEmailDocument,
     "fragment ProductColorVariant on ProductColorVariant {\n  color\n}": types.ProductColorVariantFragmentDoc,
     "fragment ProductDetails on Product {\n  id\n  name\n  description\n  price\n  categories(first: 1) {\n    name\n  }\n  images(first: 1) {\n    url\n    fileName\n  }\n  variants {\n    ... on ProductSizeColorVariant {\n      ...ProductSizeColorVariant\n    }\n    ... on ProductColorVariant {\n      ...ProductColorVariant\n    }\n  }\n}": types.ProductDetailsFragmentDoc,
     "query ProductGetById($id: ID!) {\n  product(where: {id: $id}) {\n    ...ProductDetails\n  }\n}": types.ProductGetByIdDocument,
@@ -75,6 +76,10 @@ export function graphql(source: "fragment CollectionListItem on Collection {\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query CollectionsGetList {\n  collections {\n    ...CollectionListItem\n  }\n}"): typeof import('./graphql').CollectionsGetListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query OrdersGetByEmail($email: String!) {\n  orders(where: {email: $email}) {\n    id\n    total\n    createdAt\n    orderItems {\n      id\n      quantity\n      total\n      product {\n        name\n        price\n        images {\n          url\n        }\n      }\n    }\n  }\n}"): typeof import('./graphql').OrdersGetByEmailDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
