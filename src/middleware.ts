@@ -9,9 +9,9 @@ export default authMiddleware({
 		"/",
 		"/search",
 		"/cart",
-		"/categories(.*)",
-		"/collections(.*)",
-		"/products(.*)",
+		"/categories/:slug(.*)",
+		"/collections/:slug(.*)",
 		"/product/:productId",
+		"/products(.*)",
 	],
 });
