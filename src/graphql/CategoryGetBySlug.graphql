@@ -1,0 +1,7 @@
+query CategoryGetBySlug($slug: String!) {
+	categories(where: { slug: $slug }, first: 1) {
+		id
+		name
+		description
+	}
+}

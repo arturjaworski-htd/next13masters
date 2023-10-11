@@ -1,8 +1,22 @@
-export default function HomePage() {
+import { Suspense } from "react";
+import { getProductsList } from "@/api/products";
+import { ProductList } from "@/ui/organisms/ProductList";
+import { getCollectionsList } from "@/api/collections";
+import { CollectionList } from "@/ui/organisms/CollectionList";
+
+export default async function HomePage() {
+	const { products } = await getProductsList(1, 4, "createdAt_ASC");
+	const collections = await getCollectionsList();
+
 	return (
-		<div className="mx-auto max-w-md text-center">
-			<h1 className="text-4xl font-bold">Hello, world!</h1>
-			<p className="mt-4">This is a static page.</p>
+		<div className="flex flex-col gap-8">
+			<CollectionList collections={collections} />
+
+			<Suspense>
+				<aside className="flex flex-col gap-6">
+					<ProductList products={products} />
+				</aside>
+			</Suspense>
 		</div>
 	);
 }

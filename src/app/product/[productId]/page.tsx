@@ -7,13 +7,6 @@ import { SuggestedProductsList } from "@/ui/organisms/SuggestedProducts";
 import { ReviewSection } from "@/ui/organisms/ReviewSection";
 import { ProductCoverImage } from "@/ui/atoms/ProductCoverImage";
 
-// export const generateStaticParams = async () => {
-// 	const products = await getProductsList();
-// 	return products.map((product) => ({
-// 		params: { productId: product.id },
-// 	}));
-// };
-
 export const generateMetadata = async ({
 	params,
 }: {
@@ -42,11 +35,13 @@ export default async function SingleProductPage({ params }: { params: { productI
 		<div className="flex flex-col gap-8">
 			<article className="flex flex-col gap-8 md:flex-row">
 				{product.images[0] && (
-					<ProductCoverImage
-						src={product.images[0].url}
-						alt={product.images[0].fileName}
-						priority
-					/>
+					<div className="w-full max-w-sm">
+						<ProductCoverImage
+							src={product.images[0].url}
+							alt={product.images[0].fileName}
+							priority
+						/>
+					</div>
 				)}
 				<ProductDescription product={product} />
 			</article>

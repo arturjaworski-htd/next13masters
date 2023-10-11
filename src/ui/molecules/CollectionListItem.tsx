@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CollectionListItemDescription } from "../atoms/CollectionListItemDescription";
 import { CollectionCoverImage } from "../atoms/CollectionCoverImage";
 import { type CollectionListItemFragment } from "@/gql/graphql";
 
@@ -13,7 +12,10 @@ export const CollectionListItem = ({ collection }: CollectionListItemProps) => {
 			<Link href={`/collections/${collection.slug}`}>
 				<article>
 					<CollectionCoverImage src={collection.image.url} alt={collection.image.fileName} />
-					<CollectionListItemDescription collection={collection} />
+
+					<div className="mt-2 flex flex-col gap-2">
+						<h3 className="text-sm font-semibold text-gray-700">{collection.name}</h3>
+					</div>
 				</article>
 			</Link>
 		</li>

@@ -69,14 +69,18 @@ export const ReviewForm = ({
 				</form>
 			</div>
 
-			<ul className="flex w-full flex-col gap-4" role="list">
-				{reviews.map((review) => {
-					return <ReviewListItem key={review.id} review={review} />;
-				})}
-				{optimisticDraftReviews.map((review) => {
-					return <ReviewListItem key={review.id} review={review} draft />;
-				})}
-			</ul>
+			{reviews.length || optimisticDraftReviews.length ? (
+				<ul className="flex w-full flex-col gap-4" role="list">
+					{reviews.map((review) => {
+						return <ReviewListItem key={review.id} review={review} />;
+					})}
+					{optimisticDraftReviews.map((review) => {
+						return <ReviewListItem key={review.id} review={review} draft />;
+					})}
+				</ul>
+			) : (
+				<h3 className="w-full text-center font-medium">No reviews for this product</h3>
+			)}
 		</>
 	);
 };

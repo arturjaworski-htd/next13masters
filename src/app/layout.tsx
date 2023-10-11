@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Fira_Code, Fira_Sans, Montserrat } from "next/font/google";
 
+import Link from "next/link";
 import { NavBar } from "@/ui/organisms/NavBar";
 
 const firaCode = Fira_Code({
@@ -41,8 +42,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<section className="mx-auto p-12 sm:max-w-2xl sm:py-16 md:max-w-4xl lg:max-w-7xl">
 						{children}
 					</section>
-					<footer className="p-4">
-						<p className="text-center text-sm text-gray-500">© {new Date().getFullYear()}</p>
+					<footer className="flex flex-col gap-4 p-4 text-center text-sm text-gray-500">
+						<div className="flex justify-center gap-4">
+							<Link href={"/terms-of-service"} className="hover:text-slate-700">
+								Terms of Service
+							</Link>
+							<Link href={"/privacy-policy"} className="hover:text-slate-700">
+								Privacy Policy
+							</Link>
+						</div>
+						<p>© {new Date().getFullYear()}</p>
 					</footer>
 				</body>
 			</html>
