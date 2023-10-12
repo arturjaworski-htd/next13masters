@@ -24,7 +24,11 @@ export const ActiveLink = <T extends string>({
 	disabled,
 }: ActiveLinkProps<T>) => {
 	const pathname = usePathname();
-	const isActive = exact ? pathname === href : pathname.startsWith(href);
+	const hrefPathname = href.split("?")[0];
+
+	const isActive = exact
+		? pathname === href
+		: typeof hrefPathname === "string" && pathname.startsWith(hrefPathname);
 
 	return (
 		<Link

@@ -7,18 +7,26 @@ import { type ChangeEvent } from "react";
 type SortingSelectorProps = {
 	options: { label: string; value: string; dataTestId?: string }[];
 	selected?: string;
+	resetPage?: boolean;
 };
 
-export const SortingSelector = ({ options, selected }: SortingSelectorProps) => {
+export const SortingSelector = ({ options, selected, resetPage = true }: SortingSelectorProps) => {
 	const pathname = usePathname() as Route;
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
+	const changePage = () => {
+		const splitedPathname = pathname.split("/");
+		splitedPathname[splitedPathname.length - 1] = "1";
+		return splitedPathname.join("/") as Route;
+	};
+
 	const onSelect = (event: ChangeEvent<HTMLSelectElement>) => {
 		const params = new URLSearchParams(searchParams);
 		params.set("sortBy", event.target.value);
+		const newPathname = resetPage ? changePage() : pathname;
 
-		router.replace(`${pathname}?${params.toString()}`);
+		router.replace(`${newPathname}?${params.toString()}`);
 	};
 
 	return (
