@@ -1,9 +1,7 @@
 import { verifyWebhookSignature } from "@hygraph/utils";
 import { type NextRequest } from "next/server";
 
-export const isAuthorized = async (request: NextRequest) => {
-	const body: unknown = await request.json();
-
+export const isAuthorized = async (body: unknown, request: NextRequest) => {
 	const signature = request.headers.get("gcms-signature");
 	const secret = process.env.GRAPHQL_WEBHOOK_SECRET;
 

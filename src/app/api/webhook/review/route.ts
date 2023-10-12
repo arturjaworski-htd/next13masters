@@ -4,13 +4,13 @@ import { getRaitingsByProductId } from "@/api/review";
 import { changeAverageRating } from "@/api/products";
 
 export async function POST(request: NextRequest): Promise<Response> {
-	const isValid = await isAuthorized(request);
+	const body: unknown = await request.json();
+
+	const isValid = await isAuthorized(body, request);
 
 	if (!isValid) {
 		return new Response(null, { status: 400 });
 	}
-
-	const body: unknown = await request.json();
 
 	if (
 		typeof body === "object" &&

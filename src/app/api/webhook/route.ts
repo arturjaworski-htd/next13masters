@@ -3,13 +3,13 @@ import { type NextRequest } from "next/server";
 import { isAuthorized } from "@/app/api/utils/hygraphUtils";
 
 export async function POST(request: NextRequest): Promise<Response> {
-	const isValid = await isAuthorized(request);
+	const body: unknown = await request.json();
+
+	const isValid = await isAuthorized(body, request);
 
 	if (!isValid) {
 		return new Response(null, { status: 400 });
 	}
-
-	const body: unknown = await request.json();
 
 	if (
 		typeof body === "object" &&
