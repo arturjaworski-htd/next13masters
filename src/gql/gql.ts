@@ -40,8 +40,8 @@ const documents = {
     "mutation ReviewCreate($productId: ID!, $name: String!, $email: String!, $headline: String!, $content: String!, $rating: Int!) {\n  createReview(\n    data: {product: {connect: {id: $productId}}, name: $name, email: $email, headline: $headline, content: $content, rating: $rating}\n  ) {\n    id\n  }\n}": types.ReviewCreateDocument,
     "fragment ReviewListItem on Review {\n  id\n  createdAt\n  headline\n  content\n  name\n  email\n  rating\n}": types.ReviewListItemFragmentDoc,
     "mutation ReviewPublish($id: ID!) {\n  publishReview(where: {id: $id}, to: PUBLISHED) {\n    id\n  }\n}": types.ReviewPublishDocument,
-    "query ReviewsGetByProductId($productId: ID!, $stage: Stage!) {\n  reviews(\n    where: {product: {id: $productId}}\n    stage: $stage\n    orderBy: createdAt_DESC\n  ) {\n    ...ReviewListItem\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ReviewsGetByProductIdDocument,
-    "query ReviewsRaitingsGetByProductId($productId: ID!, $stage: Stage!) {\n  reviews(\n    where: {product: {id: $productId}}\n    stage: $stage\n    orderBy: createdAt_DESC\n  ) {\n    rating\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ReviewsRaitingsGetByProductIdDocument,
+    "query ReviewsGetByProductId($productId: ID!) {\n  reviews(where: {product: {id: $productId}}, orderBy: createdAt_DESC) {\n    ...ReviewListItem\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ReviewsGetByProductIdDocument,
+    "query ReviewsRaitingsGetByProductId($productId: ID!) {\n  reviews(where: {product: {id: $productId}}, orderBy: createdAt_DESC) {\n    rating\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ReviewsRaitingsGetByProductIdDocument,
 };
 
 /**
@@ -151,11 +151,11 @@ export function graphql(source: "mutation ReviewPublish($id: ID!) {\n  publishRe
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ReviewsGetByProductId($productId: ID!, $stage: Stage!) {\n  reviews(\n    where: {product: {id: $productId}}\n    stage: $stage\n    orderBy: createdAt_DESC\n  ) {\n    ...ReviewListItem\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ReviewsGetByProductIdDocument;
+export function graphql(source: "query ReviewsGetByProductId($productId: ID!) {\n  reviews(where: {product: {id: $productId}}, orderBy: createdAt_DESC) {\n    ...ReviewListItem\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ReviewsGetByProductIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ReviewsRaitingsGetByProductId($productId: ID!, $stage: Stage!) {\n  reviews(\n    where: {product: {id: $productId}}\n    stage: $stage\n    orderBy: createdAt_DESC\n  ) {\n    rating\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ReviewsRaitingsGetByProductIdDocument;
+export function graphql(source: "query ReviewsRaitingsGetByProductId($productId: ID!) {\n  reviews(where: {product: {id: $productId}}, orderBy: createdAt_DESC) {\n    rating\n  }\n  reviewsConnection(where: {product: {id: $productId}}) {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ReviewsRaitingsGetByProductIdDocument;
 
 
 export function graphql(source: string) {

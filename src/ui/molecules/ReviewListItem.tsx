@@ -23,7 +23,9 @@ export const ReviewListItem = ({
 
 			<span className="font-medium text-slate-600">{review.headline}</span>
 			{draft && (
-				<span className="text-sm uppercase text-red-700">This comment is awaiting moderation</span>
+				<p className="text-sm uppercase text-red-700">
+					This comment is awaiting moderation - It is visible only to you
+				</p>
 			)}
 			<p className="mt-2 text-sm text-slate-500">{review.content}</p>
 		</li>

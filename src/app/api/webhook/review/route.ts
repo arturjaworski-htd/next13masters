@@ -32,7 +32,7 @@ export async function POST(request: NextRequest): Promise<Response> {
 			body.data.product.id
 		) {
 			const productId = body.data.product.id;
-			const { reviews, totalCount } = await getRaitingsByProductId(productId, "PUBLISHED");
+			const { reviews, totalCount } = await getRaitingsByProductId(productId);
 
 			const averageProductRating =
 				reviews.reduce((acc, review) => acc + review.rating, 0) / totalCount;

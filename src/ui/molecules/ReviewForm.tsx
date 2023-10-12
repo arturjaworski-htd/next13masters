@@ -9,16 +9,13 @@ import { addReview } from "@/app/product/[productId]/actions";
 export const ReviewForm = ({
 	productId,
 	reviews,
-	draftReviews,
 }: {
 	productId: string;
 	reviews: ReviewListItemFragment[];
-	draftReviews: ReviewListItemFragment[];
 }) => {
-	const [optimisticDraftReviews, setOptimisticDraftReviews] = useOptimistic(
-		draftReviews,
-		(_state, newDraftReviews: ReviewListItemFragment[]) => newDraftReviews,
-	);
+	const [optimisticReviews, setOptimisticDraftReviews] =
+		useOptimistic<({ draft?: boolean } & ReviewListItemFragment)[]>(reviews);
+
 	const formRef = useRef<HTMLFormElement>(null);
 
 	async function handleCreateReviewAction(formData: FormData) {
@@ -34,8 +31,8 @@ export const ReviewForm = ({
 		const date = Date.now();
 
 		setOptimisticDraftReviews([
-			{ ...review, id: date.toString(), createdAt: date },
-			...optimisticDraftReviews,
+			{ ...review, id: date.toString(), createdAt: date, draft: true },
+			...optimisticReviews,
 		]);
 
 		formRef.current?.reset();
@@ -69,13 +66,10 @@ export const ReviewForm = ({
 				</form>
 			</div>
 
-			{reviews.length || optimisticDraftReviews.length ? (
+			{optimisticReviews.length ? (
 				<ul className="flex w-full flex-col gap-4" role="list">
-					{reviews.map((review) => {
-						return <ReviewListItem key={review.id} review={review} />;
-					})}
-					{optimisticDraftReviews.map((review) => {
-						return <ReviewListItem key={review.id} review={review} draft />;
+					{optimisticReviews.map((review) => {
+						return <ReviewListItem key={review.id} review={review} draft={review.draft} />;
 					})}
 				</ul>
 			) : (
