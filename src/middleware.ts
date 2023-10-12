@@ -14,4 +14,5 @@ export default authMiddleware({
 		"/product/:productId",
 		"/products(.*)",
 	],
+	ignoredRoutes: ["/api/webhook(.*)"],
 });

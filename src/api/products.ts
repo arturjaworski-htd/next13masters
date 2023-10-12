@@ -8,6 +8,7 @@ import {
 	ProductsGetSuggestedByCategoryNameDocument,
 	ProductsGetBySearchPhraseDocument,
 	type ProductOrderByInput,
+	ProductChangeAverageRatingDocument,
 } from "@/gql/graphql";
 
 export const getProductsList = async (page = 1, limit = 20, orderBy?: ProductOrderByInput) => {
@@ -86,4 +87,15 @@ export const getProductById = async (id: ProductListItemFragment["id"]) => {
 	});
 
 	return product;
+};
+
+export const changeAverageRating = async (id: string, averageRating: number) => {
+	const { updateProduct } = await executeGraphql({
+		query: ProductChangeAverageRatingDocument,
+		variables: {
+			id,
+			averageRating,
+		},
+	});
+	return updateProduct;
 };

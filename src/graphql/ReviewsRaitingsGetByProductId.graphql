@@ -1,6 +1,6 @@
-query ReviewsGetByProductId($productId: ID!, $stage: Stage!) {
+query ReviewsRaitingsGetByProductId($productId: ID!, $stage: Stage!) {
 	reviews(where: { product: { id: $productId } }, stage: $stage, orderBy: createdAt_DESC) {
-		...ReviewListItem
+		rating
 	}
 	reviewsConnection(where: { product: { id: $productId } }) {
 		aggregate {

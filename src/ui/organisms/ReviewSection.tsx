@@ -2,8 +2,8 @@ import { ReviewForm } from "../molecules/ReviewForm";
 import { getReviewsByProductId } from "@/api/review";
 
 export const ReviewSection = async ({ productId }: { productId: string }) => {
-	const reviews = await getReviewsByProductId(productId);
-	const draftReviews = await getReviewsByProductId(productId, "DRAFT");
+	const { reviews } = await getReviewsByProductId(productId, "PUBLISHED");
+	const { reviews: draftReviews } = await getReviewsByProductId(productId, "DRAFT");
 
 	return (
 		<div className="flex flex-col gap-6">

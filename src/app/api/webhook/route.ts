@@ -1,22 +1,15 @@
-import { verifyWebhookSignature } from "@hygraph/utils";
 import { revalidatePath } from "next/cache";
 import { type NextRequest } from "next/server";
+import { isAuthorized } from "@/app/api/utils/hygraphUtils";
 
 export async function POST(request: NextRequest): Promise<Response> {
-	const body: unknown = await request.json();
-
-	const signature = request.headers.get("gcms-signature");
-	const secret = process.env.GRAPHQL_WEBHOOK_SECRET;
-
-	if (!signature || !secret) {
-		return new Response(null, { status: 400 });
-	}
-
-	const isValid = verifyWebhookSignature({ body: body, signature, secret });
+	const isValid = await isAuthorized(request);
 
 	if (!isValid) {
 		return new Response(null, { status: 400 });
 	}
+
+	const body: unknown = await request.json();
 
 	if (
 		typeof body === "object" &&
