@@ -2,4 +2,7 @@ mutation ProductChangeAverageRating($id: ID!, $averageRating: Float!) {
 	updateProduct(where: { id: $id }, data: { averageRating: $averageRating }) {
 		id
 	}
+	publishProduct(where: { id: $id }) {
+		id
+	}
 }

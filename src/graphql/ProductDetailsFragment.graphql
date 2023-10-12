@@ -18,4 +18,5 @@ fragment ProductDetails on Product {
 			...ProductColorVariant
 		}
 	}
+	averageRating
 }

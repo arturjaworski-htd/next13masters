@@ -13,6 +13,16 @@ type SortingOption = {
 
 const sortingOptions: Array<SortingOption> = [
 	{
+		label: "Rating (High to Low)",
+		value: "averageRating_DESC",
+		dataTestId: "sort-by-rating",
+	},
+	{
+		label: "Riting (Low to High)",
+		value: "averageRating_ASC",
+		dataTestId: "sort-by-rating",
+	},
+	{
 		label: "Name (A-Z)",
 		value: "name_ASC",
 	},

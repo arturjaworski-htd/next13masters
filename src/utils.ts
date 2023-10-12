@@ -6,7 +6,7 @@ export const formatMoney = (amount: number) => {
 };
 
 export const formatRating = (rating: number) => {
-	return `${rating} / 5`;
+	return `${rating}/5`;
 };
 
 export const formatDate = (date: Date) => {

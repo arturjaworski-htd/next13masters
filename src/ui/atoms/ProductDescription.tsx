@@ -6,7 +6,7 @@ import {
 	type ProductDetailsFragment,
 	type ProductColorVariantFragment,
 } from "@/gql/graphql";
-import { formatMoney } from "@/utils";
+import { formatMoney, formatRating } from "@/utils";
 import { getOrCreateCart, addProductToCart } from "@/api/cart";
 
 type ProductDescriptionProps = {
@@ -14,7 +14,7 @@ type ProductDescriptionProps = {
 };
 
 export const ProductDescription = ({
-	product: { id, name, price, description, variants },
+	product: { id, name, price, description, variants, averageRating },
 }: ProductDescriptionProps) => {
 	async function addProductToCartAction() {
 		"use server";
@@ -29,13 +29,17 @@ export const ProductDescription = ({
 		| ProductColorVariantFragment[];
 
 	return (
-		<div className="flex grow flex-col gap-6">
+		<div className="flex grow flex-col gap-4">
 			<h1 className="text-2xl font-bold text-slate-900">{name}</h1>
 
 			<p className="text-lg font-medium text-slate-900">
 				<span className="sr-only">Price:</span>
 				{formatMoney(price / 100)}
 			</p>
+
+			{averageRating && (
+				<p className="text-md text-slate-500">Rating: {formatRating(averageRating)}</p>
+			)}
 
 			<p className="text-sm text-slate-500">{description}</p>
 
